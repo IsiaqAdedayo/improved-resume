@@ -143,7 +143,7 @@ export function ContactSection() {
     { label: "Phone",       val: PERSON.phone,    href: `tel:${PERSON.phone}` },
     { label: "GitHub",      val: "github.com/IsiaqAdedayo", href: PERSON.github },
     { label: "LinkedIn",    val: "linkedin.com/in/showande-adedayo", href: PERSON.linkedin },
-    { label: "Portfolio",   val: "adedayo-portfolio-website.vercel.app", href: PERSON.portfolio },
+    { label: "Resume",   val: "View Resume", href: PERSON.resume },
   ];
 
   return (

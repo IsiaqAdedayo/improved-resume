@@ -1,16 +1,17 @@
 export const PERSON = {
-  name:     "Adedayo Showande",
+  name: "Adedayo Showande",
   initials: "A.S",
-  role:     "Senior Frontend Engineer",
-  sub:      "React · Next.js · TypeScript",
+  role: "Senior Frontend Engineer",
+  sub: "React · Next.js · TypeScript",
   location: "Lagos, Nigeria",
-  email:    "hadedaryor@gmail.com",
-  phone:    "+234 810 460 2568",
-  bio:      "Senior Frontend Engineer with 4+ years building production-grade web applications. I own features end-to-end — from architecture decisions to pixel-perfect delivery — across marketplace and e-commerce platforms used by hundreds of active users.",
-  github:   "https://github.com/IsiaqAdedayo",
+  email: "hadedaryor@gmail.com",
+  phone: "+234 810 460 2568",
+  bio: "Senior Frontend Engineer with 4+ years building production-grade web applications. I own features end-to-end — from architecture decisions to pixel-perfect delivery — across marketplace and e-commerce platforms used by hundreds of active users.",
+  github: "https://github.com/IsiaqAdedayo",
   linkedin: "https://www.linkedin.com/in/showande-adedayo-789a42195/",
-  twitter:  "https://x.com/imdahdayo",
-  portfolio:"https://adedayo-portfolio-website.vercel.app",
+  twitter: "https://x.com/imdahdayo",
+  resume:
+    "https://drive.google.com/file/d/1qQjDmGHjr5SYUVbda77CfPYQOiDaTVL9/view?usp=sharing",
 };
 
 export const STATS = [
