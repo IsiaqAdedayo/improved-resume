@@ -1,25 +1,38 @@
 export const T = {
-  // Colors
-  ink:          "#0f0f0d",
-  inkLight:     "#2e2e2a",
-  muted:        "#7a7a72",
-  warm:         "#f2ece0",
-  cream:        "#f8f5ee",
-  white:        "#ffffff",
-  accent:       "#b8832a",      // warm amber
-  accentHover:  "#d4a04e",
-  accentDim:    "rgba(184,131,42,0.12)",
+  // Base backgrounds
+  bg: "#13111C",
+  bgSurface: "#1a1826",
+  bgDeep: "#0d0b14",
+
+  // Text on dark
+  ink: "#ffffff",
+  inkMuted: "rgba(255,255,255,0.45)",
+  inkDim: "rgba(255,255,255,0.18)",
+
+  // Accent
+  accent: "#b8832a",
+  accentHover: "#d4a04e",
+  accentDim: "rgba(184,131,42,0.12)",
+  accentGlow: "rgba(184,131,42,0.18)",
 
   // Borders
-  border:       "rgba(15,15,13,0.09)",
-  borderMid:    "rgba(15,15,13,0.16)",
+  border: "rgba(255,255,255,0.07)",
+  borderMid: "rgba(255,255,255,0.13)",
 
-  // Dark section
-  dark:         "#0f0f0d",
-  darkSurface:  "#181816",
+  // Light section (Experience only)
+  // cream: "#f8f5ee",
+  warm: "#f2ece0",
+  inkDark: "#0f0f0d",
+  inkLightDark: "#2e2e2a",
+  mutedDark: "#7a7a72",
+  borderLight: "rgba(15,15,13,0.09)",
+  borderLightMid: "rgba(15,15,13,0.16)",
+
+  muted: "#7a7a72",
+  inkLight: "#d7d5d1",
 
   // Typography
-  fontDisplay:  "'Cormorant Garamond', 'Playfair Display', Georgia, serif",
-  fontBody:     "'Syne', 'DM Sans', system-ui, sans-serif",
-  fontMono:     "'JetBrains Mono', 'DM Mono', monospace",
+  fontDisplay: "'Cormorant Garamond', Georgia, serif",
+  fontBody: "'Syne', system-ui, sans-serif",
+  fontMono: "'JetBrains Mono', monospace",
 } as const;

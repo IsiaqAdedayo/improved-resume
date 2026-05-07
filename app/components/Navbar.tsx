@@ -2,25 +2,29 @@
 
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { T } from "../styles/tokens";
 import { navDrop } from "../lib/animations";
 import { PERSON } from "../data";
 
-/* ── Styles ── */
 const Nav = styled(motion.nav)`
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   padding: 1.35rem 3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(248, 245, 238, 0.9);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(13, 11, 20, 0.82);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border-bottom: 1px solid ${T.border};
 
-  @media (max-width: 768px) { padding: 1.2rem 1.5rem; }
+  @media (max-width: 768px) {
+    padding: 1.2rem 1.5rem;
+  }
 `;
 
 const Logo = styled(motion.button)`
@@ -34,7 +38,9 @@ const Logo = styled(motion.button)`
   letter-spacing: -0.03em;
   line-height: 1;
 
-  span { color: ${T.accent}; }
+  span {
+    color: ${T.accent};
+  }
 `;
 
 const NavLinks = styled.div`
@@ -42,10 +48,12 @@ const NavLinks = styled.div`
   gap: 2.5rem;
   align-items: center;
 
-  @media (max-width: 620px) { display: none; }
+  @media (max-width: 620px) {
+    display: none;
+  }
 `;
 
-const NavLink = styled(motion.button)`
+const NavLink = styled(motion.button)<{ $active: boolean }>`
   background: none;
   border: none;
   cursor: pointer;
@@ -54,20 +62,36 @@ const NavLink = styled(motion.button)`
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: ${T.muted};
+  color: ${(p) => (p.$active ? T.ink : T.inkMuted)};
   transition: color 0.2s;
+  position: relative;
 
-  &:hover { color: ${T.ink}; }
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: ${T.accent};
+    transform: scaleX(${(p) => (p.$active ? 1 : 0)});
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &:hover {
+    color: ${T.ink};
+  }
 `;
 
 const HireBtn = styled(motion.a)`
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background: ${T.ink};
-  color: ${T.white};
+  background: ${T.accent};
+  color: #fff;
   border: none;
-  border-radius: 2px;
+  border-radius: 3px;
   padding: 0.55rem 1.25rem;
   font-family: ${T.fontBody};
   font-size: 0.78rem;
@@ -78,27 +102,78 @@ const HireBtn = styled(motion.a)`
   transition: background 0.2s;
   text-decoration: none;
 
-  &:hover { background: ${T.accent}; }
+  &:hover {
+    background: ${T.accentHover};
+  }
 
-  @media (max-width: 620px) { display: none; }
+  @media (max-width: 620px) {
+    display: none;
+  }
 `;
 
-/* ── Component ── */
+const SECTIONS = ["projects", "skills", "experience", "contact"];
+
 interface NavbarProps {
   scrollTo: (id: string) => void;
 }
 
 export function Navbar({ scrollTo }: NavbarProps) {
+  const [activeSection, setActiveSection] = useState<string>("");
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+
+    SECTIONS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveSection(id);
+          }
+        },
+        {
+          rootMargin: "-40% 0px -55% 0px",
+          threshold: 0,
+        }
+      );
+
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    // Also watch for hero (top of page)
+    const heroEl = document.getElementById("home");
+    if (heroEl) {
+      const heroObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection("");
+        },
+        { rootMargin: "0px 0px -80% 0px", threshold: 0 }
+      );
+      heroObserver.observe(heroEl);
+      observers.push(heroObserver);
+    }
+
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
+
   return (
     <Nav variants={navDrop} initial="hidden" animate="show">
-      <Logo onClick={() => scrollTo("home")} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+      <Logo
+        onClick={() => scrollTo("home")}
+        whileHover={{ scale: 1.04 }}
+        whileTap={{ scale: 0.97 }}
+      >
         A<span>.</span>S
       </Logo>
 
       <NavLinks>
-        {["projects", "experience", "skills", "contact"].map((s) => (
+        {SECTIONS.map((s) => (
           <NavLink
             key={s}
+            $active={activeSection === s}
             onClick={() => scrollTo(s)}
             whileHover={{ y: -1 }}
           >

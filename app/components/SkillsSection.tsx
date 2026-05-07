@@ -7,46 +7,43 @@ import { Inner, Label } from "./ui";
 import { vp } from "../lib/animations";
 import { SKILLS, SKILL_MARQUEE } from "../data";
 
-/* ── Styles ── */
 const Wrap = styled.section`
-  padding: 5rem 0 6rem;
-  background: ${T.warm};
+  padding: 6rem 0;
+  background: ${T.bgDeep};
   border-top: 1px solid ${T.border};
   border-bottom: 1px solid ${T.border};
   overflow: hidden;
 `;
 
-/* Marquee strip */
-const MarqueeLabel = styled(Inner)`
-  margin-bottom: 1.6rem;
-`;
-
+/* ── Marquee ── */
 const MarqueeOuter = styled.div`
   position: relative;
   overflow: hidden;
+  margin-bottom: 5rem;
 
-  /* Fade masks on edges */
-  &::before, &::after {
+  &::before,
+  &::after {
     content: "";
     position: absolute;
-    top: 0; bottom: 0;
-    width: 12%;
+    top: 0;
+    bottom: 0;
+    width: 14%;
     z-index: 1;
     pointer-events: none;
   }
   &::before {
     left: 0;
-    background: linear-gradient(to right, ${T.warm}, transparent);
+    background: linear-gradient(to right, ${T.bgDeep}, transparent);
   }
   &::after {
     right: 0;
-    background: linear-gradient(to left, ${T.warm}, transparent);
+    background: linear-gradient(to left, ${T.bgDeep}, transparent);
   }
 `;
 
 const Track = styled(motion.div)`
   display: flex;
-  gap: 1.2rem;
+  gap: 1rem;
   width: max-content;
   padding: 0.5rem 0;
 `;
@@ -54,22 +51,25 @@ const Track = styled(motion.div)`
 const Chip = styled.div`
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.52rem 1.2rem;
+  gap: 0.5rem;
+  padding: 0.55rem 1.3rem;
   border: 1px solid ${T.border};
   border-radius: 100px;
-  background: ${T.cream};
+  background: rgba(255, 255, 255, 0.03);
   font-family: ${T.fontBody};
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 500;
-  color: ${T.inkLight};
+  color: ${T.inkMuted};
   white-space: nowrap;
-  transition: border-color 0.2s, color 0.2s;
+  backdrop-filter: blur(8px);
+  transition:
+    border-color 0.2s,
+    color 0.2s;
 
   &::before {
     content: "·";
     color: ${T.accent};
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: 1;
   }
 
@@ -79,85 +79,123 @@ const Chip = styled.div`
   }
 `;
 
-/* Skills grid */
-const GridWrap = styled(Inner)`
-  margin-top: 4rem;
+/* ── Grid ── */
+const GridWrap = styled(Inner)``;
+
+const HeadRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+`;
+
+const GridTitle = styled(motion.h2)`
+  font-family: ${T.fontDisplay};
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: ${T.ink};
+  line-height: 1;
+
+  em {
+    font-style: italic;
+    color: ${T.accent};
+  }
 `;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  margin-top: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1.2rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: 640px) {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
   }
 `;
 
-const CategoryCard = styled(motion.div)`
-  padding: 1.5rem;
+const Card = styled(motion.div)`
+  padding: 1.6rem;
   border: 1px solid ${T.border};
-  border-radius: 4px;
-  background: ${T.cream};
-  transition: border-color 0.2s;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(10px);
+  transition:
+    border-color 0.25s,
+    background 0.25s,
+    transform 0.25s;
 
-  &:hover { border-color: ${T.accent}; }
+  &:hover {
+    border-color: rgba(184, 131, 42, 0.4);
+    background: rgba(184, 131, 42, 0.04);
+    transform: translateY(-3px);
+  }
 `;
 
 const CatTitle = styled.div`
   font-family: ${T.fontMono};
-  font-size: 0.65rem;
-  letter-spacing: 0.14em;
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: ${T.accent};
-  margin-bottom: 1rem;
+  margin-bottom: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 14px;
+    height: 1px;
+    background: ${T.accent};
+    opacity: 0.6;
+  }
 `;
 
 const SkillList = styled.ul`
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.55rem;
 `;
 
 const SkillItem = styled.li`
-  font-size: 0.875rem;
-  color: ${T.inkLight};
+  font-size: 0.845rem;
+  color: ${T.inkMuted};
   font-weight: 500;
   padding-left: 1rem;
   position: relative;
+  transition: color 0.2s;
 
   &::before {
     content: "▹";
     position: absolute;
     left: 0;
-    color: ${T.muted};
-    font-size: 0.7rem;
+    color: ${T.accent};
+    font-size: 0.68rem;
+    opacity: 0.7;
     top: 0.1em;
+  }
+
+  ${Card}:hover & {
+    color: ${T.ink};
   }
 `;
 
-/* ── Component ── */
 export function SkillsSection() {
   return (
     <Wrap id="skills">
       {/* Marquee */}
-      <MarqueeLabel>
-        <Label
-          initial={{ opacity: 0, x: -10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={vp}
-        >
-          Tech stack
-        </Label>
-      </MarqueeLabel>
-
       <MarqueeOuter>
         <Track
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
         >
           {[...SKILL_MARQUEE, ...SKILL_MARQUEE].map((s, i) => (
             <Chip key={i}>{s}</Chip>
@@ -165,22 +203,32 @@ export function SkillsSection() {
         </Track>
       </MarqueeOuter>
 
-      {/* Categorised grid */}
+      {/* Grid */}
       <GridWrap>
-        <Label
-          initial={{ opacity: 0, x: -10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={vp}
-          style={{ marginTop: 0 }}
-        >
-          By category
-        </Label>
+        <HeadRow>
+          <Label
+            $light={false}
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={vp}
+          >
+            By category
+          </Label>
+          <GridTitle
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={vp}
+            transition={{ duration: 0.7 }}
+          >
+            Tech <em>Stack</em>
+          </GridTitle>
+        </HeadRow>
 
         <Grid>
           {Object.entries(SKILLS).map(([cat, items], i) => (
-            <CategoryCard
+            <Card
               key={cat}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={vp}
               transition={{ duration: 0.55, delay: i * 0.07 }}
@@ -191,7 +239,7 @@ export function SkillsSection() {
                   <SkillItem key={skill}>{skill}</SkillItem>
                 ))}
               </SkillList>
-            </CategoryCard>
+            </Card>
           ))}
         </Grid>
       </GridWrap>

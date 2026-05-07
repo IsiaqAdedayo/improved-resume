@@ -2,7 +2,6 @@ import { createGlobalStyle } from "styled-components";
 import { T } from "./tokens";
 
 export const GlobalStyles = createGlobalStyle`
-  /* --- Font imports --- */
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
   *, *::before, *::after {
@@ -18,7 +17,7 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     font-family: ${T.fontBody};
-    background: ${T.cream};
+    background: ${T.bg};
     color: ${T.ink};
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
@@ -27,10 +26,10 @@ export const GlobalStyles = createGlobalStyle`
 
   ::selection {
     background: ${T.accent};
-    color: ${T.white};
+    color: #fff;
   }
 
-  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar { width: 2px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: ${T.accent}; border-radius: 2px; }
 

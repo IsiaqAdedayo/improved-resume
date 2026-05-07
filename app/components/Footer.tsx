@@ -7,8 +7,8 @@ import { T } from "../styles/tokens";
 import { PERSON } from "../data";
 
 const FooterEl = styled.footer`
-  background: ${T.dark};
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: ${T.bgDeep};
+  border-top: 1px solid ${T.border};
   padding: 1.8rem 3rem;
   display: flex;
   justify-content: space-between;
@@ -25,27 +25,29 @@ const FooterEl = styled.footer`
 
 const Note = styled.div`
   font-family: ${T.fontMono};
-  font-size: 0.68rem;
-  color: rgba(255, 255, 255, 0.22);
+  font-size: 0.66rem;
+  color: ${T.inkDim};
   letter-spacing: 0.05em;
 `;
 
 const SocRow = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 0.9rem;
 `;
 
 const SocBtn = styled(motion.a)`
-  width: 34px;
-  height: 34px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 32px;
+  height: 32px;
+  border: 1px solid ${T.border};
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.35);
+  color: ${T.inkDim};
   text-decoration: none;
-  transition: border-color 0.2s, color 0.2s;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
 
   &:hover {
     border-color: ${T.accent};
@@ -60,22 +62,17 @@ export function Footer() {
 
       <SocRow>
         {[
-          { href: PERSON.github,   icon: <Github size={13} /> },
-          { href: PERSON.linkedin, icon: <Linkedin size={13} /> },
-          { href: `mailto:${PERSON.email}`, icon: <Mail size={13} /> },
+          { href: PERSON.github, icon: <Github size={12} /> },
+          { href: PERSON.linkedin, icon: <Linkedin size={12} /> },
+          { href: `mailto:${PERSON.email}`, icon: <Mail size={12} /> },
         ].map((s, i) => (
-          <SocBtn
-            key={i}
-            href={s.href}
-            target="_blank"
-            whileHover={{ y: -2 }}
-          >
+          <SocBtn key={i} href={s.href} target="_blank" whileHover={{ y: -2 }}>
             {s.icon}
           </SocBtn>
         ))}
       </SocRow>
 
-      <Note>Built with Next.js · Framer Motion · Styled Components</Note>
+      <Note>Next.js · Framer Motion · Styled Components</Note>
     </FooterEl>
   );
 }
