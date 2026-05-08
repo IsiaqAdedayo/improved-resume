@@ -7,7 +7,7 @@ import { FooterEl, Note, SocRow, SocBtn } from "./styles";
 export function Footer() {
   return (
     <FooterEl>
-      <Note>© 2025 Adedayo Showande · All rights reserved</Note>
+      <Note>© {new Date().getFullYear()} Adedayo Showande · All rights reserved</Note>
 
       <SocRow>
         {[
