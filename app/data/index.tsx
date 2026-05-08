@@ -77,7 +77,7 @@ export const PROJECTS = [
     tint: "rgba(194, 65, 12, 0.18)",
     glow: "rgba(194, 65, 12, 0.08)",
     desktopImg: "/screenshots/fmm-desktop.png",
-    mobileImg: null,
+    mobileImg: "/screenshots/fmm-mobile.png",
   },
   {
     index: "03",
@@ -92,24 +92,24 @@ export const PROJECTS = [
     tint: "rgba(74, 124, 89, 0.18)",
     glow: "rgba(74, 124, 89, 0.08)",
     desktopImg: "/screenshots/mindful-desktop.png",
-    mobileImg: null,
+    mobileImg: "/screenshots/mindful-mobile.png",
   },
-  {
-    index: "04",
-    title: "CashBuddy",
-    tag: "Fintech · React · TypeScript",
-    tagline:
-      "Financial web platform with clean UI and reliable user interactions.",
-    desc: "Financial platform built with a focus on clean UI design, accessibility, and trustworthy UX patterns essential for fintech products.",
-    tech: ["React", "TypeScript", "Styled Components"],
-    link: "https://cashbuddy.ng",
-    github: null,
-    badge: "Production · Live",
-    tint: "rgba(6, 95, 70, 0.18)",
-    glow: "rgba(6, 95, 70, 0.08)",
-    desktopImg: null,
-    mobileImg: null,
-  },
+  // {
+  //   index: "04",
+  //   title: "CashBuddy",
+  //   tag: "Fintech · React · TypeScript",
+  //   tagline:
+  //     "Financial web platform with clean UI and reliable user interactions.",
+  //   desc: "Financial platform built with a focus on clean UI design, accessibility, and trustworthy UX patterns essential for fintech products.",
+  //   tech: ["React", "TypeScript", "Styled Components"],
+  //   link: "https://cashbuddy.ng",
+  //   github: null,
+  //   badge: "Production · Live",
+  //   tint: "rgba(6, 95, 70, 0.18)",
+  //   glow: "rgba(6, 95, 70, 0.08)",
+  //   desktopImg: null,
+  //   mobileImg: null,
+  // },
 ];
 
 export const OPEN_SOURCE = [

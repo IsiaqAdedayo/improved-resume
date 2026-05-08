@@ -32,7 +32,6 @@ export const PageWrap = styled.div`
   position: relative;
   min-height: 100vh;
   background: ${T.bg};
-  overflow-x: hidden;
 `;
 
 export const Inner = styled.div`

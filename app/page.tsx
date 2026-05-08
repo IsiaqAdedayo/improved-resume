@@ -32,6 +32,7 @@ export default function Portfolio() {
   const springY = useSpring(pos.y, { stiffness: 90, damping: 22 });
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
 
     const onMove = (e: MouseEvent) => {
