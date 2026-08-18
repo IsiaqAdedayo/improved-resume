@@ -10,6 +10,7 @@ import {
   CursorGlowWrap,
   CursorGlowOrb,
 } from "./components/ui";
+import { CustomCursorProvider } from "./components/CustomCursor";
 
 import { Navbar } from "./components/Navbar";
 import { HeroSection } from "./components/HeroSection";
@@ -50,7 +51,7 @@ export default function Portfolio() {
   if (!mounted) return null;
 
   return (
-    <>
+    <CustomCursorProvider>
       <GlobalStyles />
       <PageWrap>
         <Grain />
@@ -58,7 +59,7 @@ export default function Portfolio() {
         {/* Scroll progress bar */}
         <ProgressBar style={{ scaleX: scrollYProgress }} />
 
-        {/* Cursor glow */}
+        {/* Ambient cursor glow (large soft blob, separate from precise cursor) */}
         <CursorGlowWrap>
           <CursorGlowOrb style={{ left: springX, top: springY }} />
         </CursorGlowWrap>
@@ -72,6 +73,6 @@ export default function Portfolio() {
         <ContactSection />
         <Footer />
       </PageWrap>
-    </>
+    </CustomCursorProvider>
   );
 }

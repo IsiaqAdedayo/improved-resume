@@ -1,6 +1,6 @@
 "use client";
 
-import { useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { OPEN_SOURCE, PROJECTS } from "../../data";
@@ -241,8 +241,15 @@ export function ProjectsSection() {
                       <Tag key={t}>{t}</Tag>
                     ))}
                   </div>
-                  <OSSBadge>{p.badge}</OSSBadge>
                 </OSSFooter>
+								<motion.div
+									whileHover={{ scale: 1.1 }}
+									whileTap={{ scale: 0.95 }}
+									style={{width: "100%", display:"flex", alignItems:"center", justifyContent: "end", marginTop: "20px"}}
+									transition={{ type: "spring", stiffness: 280, damping: 24 }}
+								>
+									<OSSBadge>{p.badge}</OSSBadge>
+								</motion.div>
               </OSSCard>
             ))}
           </OSSGrid>

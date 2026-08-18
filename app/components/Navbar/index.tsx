@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { navDrop } from "../../lib/animations";
 import { PERSON } from "../../data";
+import { useCursorHandlers } from "../CustomCursor";
 import {
   Nav,
   Logo,
@@ -86,6 +87,7 @@ const SPRING = { type: "spring", stiffness: 400, damping: 30 } as const;
 export function Navbar({ scrollTo }: NavbarProps) {
   const [activeSection, setActiveSection] = useState<string>("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const cursorHover = useCursorHandlers("hover");
 
   /* ── section tracking ───────────────────────────────── */
   useEffect(() => {
@@ -139,6 +141,7 @@ export function Navbar({ scrollTo }: NavbarProps) {
           onClick={() => scrollTo("home")}
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.97 }}
+          {...cursorHover}
         >
           A<span>.</span>S
         </Logo>
@@ -150,6 +153,7 @@ export function Navbar({ scrollTo }: NavbarProps) {
               $active={activeSection === s}
               onClick={() => scrollTo(s)}
               whileHover={{ y: -1 }}
+              {...cursorHover}
             >
               {s}
             </NavLink>
@@ -160,6 +164,7 @@ export function Navbar({ scrollTo }: NavbarProps) {
           href={`mailto:${PERSON.email}`}
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
+          {...cursorHover}
         >
           Hire Me ↗
         </HireBtn>
@@ -213,6 +218,7 @@ export function Navbar({ scrollTo }: NavbarProps) {
                     variants={linkItemV}
                     onClick={() => handleDrawerNav(s)}
                     whileTap={{ scale: 0.97 }}
+                    {...cursorHover}
                   >
                     {s}
                   </DrawerLink>
@@ -229,6 +235,7 @@ export function Navbar({ scrollTo }: NavbarProps) {
                 animate="show"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
+                {...cursorHover}
               >
                 Hire Me ↗
               </DrawerHireBtn>
