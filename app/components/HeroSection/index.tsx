@@ -262,10 +262,10 @@ export function HeroSection({ scrollTo }: HeroProps) {
             <StatL>{s.l}</StatL>
           </Stat>
         ))}
-        <ScrollHint onClick={() => scrollTo("projects")} whileHover={{ y: 2 }}>
-          Scroll to explore ↓
-        </ScrollHint>
       </StatsBar>
+			<ScrollHint onClick={() => scrollTo("projects")} whileHover={{ y: 2 }}>
+				Scroll to explore ↓
+			</ScrollHint>
     </HeroWrap>
   );
 }

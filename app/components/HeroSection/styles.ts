@@ -6,7 +6,7 @@ import { Inner } from "../ui";
 
 export const HeroWrap = styled.section`
   min-height: 100vh;
-  padding: 9rem 0 5rem;
+  padding: 7rem 0 5rem;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -146,7 +146,7 @@ export const TabBlock = styled(motion.div)`
 
 export const TabRow = styled.div`
   display: flex;
-  gap: 0;
+  gap: 10px;
   flex-wrap: wrap;
 `;
 
@@ -171,7 +171,7 @@ export const TabBtn = styled.button<{ $active: boolean }>`
     left: 0;
     height: 1px;
     background: ${T.accent};
-    width: ${(p) => (p.$active ? "100%" : "0")};
+    width: ${(p) => (p.$active ? "80%" : "0")};
     transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
@@ -250,6 +250,7 @@ export const ScrollHint = styled(motion.button)`
   letter-spacing: 0.14em;
   text-transform: uppercase;
   transition: color 0.2s;
+	margin-top: 20px;
 
   &:hover {
     color: ${T.accent};
