@@ -200,7 +200,7 @@ export function Navbar({ scrollTo }: NavbarProps) {
             {/* Panel */}
             <DrawerPanel
               key="drawer"
-              variants={drawerV}
+              variants={drawerV as any}
               initial="hidden"
               animate="show"
               exit="exit"
@@ -215,7 +215,7 @@ export function Navbar({ scrollTo }: NavbarProps) {
                 {SECTIONS.map((s) => (
                   <DrawerLink
                     key={s}
-                    variants={linkItemV}
+                    variants={linkItemV as any}
                     onClick={() => handleDrawerNav(s)}
                     whileTap={{ scale: 0.97 }}
                     {...cursorHover}
@@ -230,7 +230,7 @@ export function Navbar({ scrollTo }: NavbarProps) {
               {/* Hire Me at the bottom */}
               <DrawerHireBtn
                 href={`mailto:${PERSON.email}`}
-                variants={hireBtnV}
+                variants={hireBtnV as any}
                 initial="hidden"
                 animate="show"
                 whileHover={{ scale: 1.03 }}
