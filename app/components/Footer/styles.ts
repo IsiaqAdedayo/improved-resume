@@ -6,12 +6,37 @@ import { T } from "../../styles/tokens";
 export const FooterEl = styled.footer`
   background: ${T.bgDeep};
   border-top: 1px solid ${T.border};
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(184, 131, 42, 0.04) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+  }
+`;
+
+export const Divider = styled.div`
+  width: 100%;
+  height: 1px;
+  background: ${T.border};
+`;
+
+export const FooterContent = styled.div`
   padding: 1.8rem 3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
+  position: relative;
+  z-index: 1;
 
   @media (max-width: 640px) {
     padding: 1.5rem;

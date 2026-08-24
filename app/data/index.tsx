@@ -64,6 +64,7 @@ export const PROJECTS = [
     glow: "rgb(17, 137, 244)",
     desktopImg: "/screenshots/showrepublic-desktop.png",
     mobileImg: "/screenshots/showrepublic-mobile.png",
+    beforeImg: null as string | null, // Add a wireframe/early screenshot path here to enable the Before/After slider
   },
 
   {
@@ -89,6 +90,7 @@ export const PROJECTS = [
     glow: "rgba(194, 65, 12, 0.08)",
     desktopImg: "/screenshots/fmm-desktop.png",
     mobileImg: "/screenshots/fmm-mobile.png",
+    beforeImg: null as string | null,
   },
 
   {
@@ -111,6 +113,7 @@ export const PROJECTS = [
     glow: "rgba(74, 124, 89, 0.08)",
     desktopImg: "/screenshots/mindful-desktop.png",
     mobileImg: "/screenshots/mindful-mobile.png",
+    beforeImg: null as string | null,
   },
 ];
 
@@ -129,6 +132,9 @@ export const OPEN_SOURCE = [
     github:
       "https://github.com/IsiaqAdedayo/invoice-builder-api",
     badge: "Open Source",
+    stars: 4,
+    language: "TypeScript",
+    lastCommit: "2 months ago",
   },
 
   {
@@ -145,6 +151,9 @@ export const OPEN_SOURCE = [
     github:
       "https://github.com/IsiaqAdedayo/GitHubRepoClone",
     badge: "Open Source",
+    stars: 6,
+    language: "JavaScript",
+    lastCommit: "1 year ago",
   },
 
   {
@@ -161,6 +170,9 @@ export const OPEN_SOURCE = [
     github:
       "https://github.com/IsiaqAdedayo/Crypto_Tracker",
     badge: "Open Source",
+    stars: 8,
+    language: "JavaScript",
+    lastCommit: "1 year ago",
   },
 ];
 
@@ -267,55 +279,68 @@ export const EXPERIENCE = [
   },
 ];
 
-export const SKILLS = {
+/* ── Skill depth scale ─────────────────────────────────────
+   Lead  — architected and owned in production
+   Build — shipped production features with this
+   Use   — integrates confidently
+   Learn — used in real projects
+──────────────────────────────────────────────────────────── */
+export type SkillDepth = "Lead" | "Build" | "Use" | "Learn";
+
+export interface SkillEntry {
+  name: string;
+  depth: SkillDepth;
+  years?: string;
+}
+
+export const SKILLS: Record<string, SkillEntry[]> = {
   Languages: [
-    "TypeScript",
-    "JavaScript (ES6+)",
-    "HTML5",
-    "CSS3",
+    { name: "TypeScript", depth: "Lead", years: "4yr" },
+    { name: "JavaScript (ES6+)", depth: "Lead", years: "5yr" },
+    { name: "HTML5", depth: "Lead", years: "5yr" },
+    { name: "CSS3", depth: "Lead", years: "5yr" },
   ],
 
   "Frontend Engineering": [
-    "React",
-    "Next.js (App Router)",
-    "React Native",
-    "Component Architecture",
-    "Responsive UI",
-    "Frontend Performance",
+    { name: "React", depth: "Lead", years: "4yr" },
+    { name: "Next.js (App Router)", depth: "Lead", years: "4yr" },
+    { name: "React Native", depth: "Use", years: "1yr" },
+    { name: "Component Architecture", depth: "Lead", years: "4yr" },
+    { name: "Responsive UI", depth: "Lead", years: "4yr" },
+    { name: "Frontend Performance", depth: "Build", years: "4yr" },
   ],
 
   "Backend & APIs": [
-    "Node.js",
-    "NestJS",
-    "GraphQL",
-    "REST APIs",
-    "Apollo Client",
+    { name: "Node.js", depth: "Use", years: "2yr" },
+    { name: "NestJS", depth: "Build", years: "1yr" },
+    { name: "GraphQL", depth: "Build", years: "2yr" },
+    { name: "REST APIs", depth: "Lead", years: "4yr" },
+    { name: "Apollo Client", depth: "Build", years: "2yr" },
   ],
 
   "State & Styling": [
-    "Zustand",
-    "Redux Toolkit",
-    "Tailwind CSS",
-    "Ant Design",
-    "Styled Components",
-    "Chakra UI",
+    { name: "Zustand", depth: "Build", years: "3yr" },
+    { name: "Redux Toolkit", depth: "Use", years: "2yr" },
+    { name: "Tailwind CSS", depth: "Lead", years: "4yr" },
+    { name: "Ant Design", depth: "Lead", years: "4yr" },
+    { name: "Styled Components", depth: "Lead", years: "4yr" },
+    { name: "Chakra UI", depth: "Use", years: "1yr" },
   ],
 
   "Testing & Quality": [
-    "Jest",
-    "Playwright",
-    "API Testing",
-    "Code Maintainability",
+    { name: "Jest", depth: "Use", years: "2yr" },
+    { name: "Playwright", depth: "Use", years: "2yr" },
+    { name: "API Testing", depth: "Use", years: "2yr" },
+    { name: "Code Maintainability", depth: "Lead", years: "4yr" },
   ],
 
   "Tools & Workflow": [
-    "Git",
-    "GitHub",
-    "Postman",
-    "Swagger",
-    "Figma",
-    "Vercel",
-    "AI-Assisted Development",
+    { name: "Git", depth: "Lead", years: "4yr" },
+    { name: "GitHub", depth: "Lead", years: "4yr" },
+    { name: "Figma", depth: "Use", years: "2yr" },
+    { name: "Vercel", depth: "Build", years: "4yr" },
+    { name: "Postman", depth: "Build", years: "3yr" },
+    { name: "AI-Assisted Dev", depth: "Build", years: "2yr" },
   ],
 };
 
@@ -341,6 +366,29 @@ export const SKILL_MARQUEE = [
   "Git",
   "GitHub",
   "Vercel",
+];
+
+/* ── Social proof ────────────────────────────────────────── */
+// PLACEHOLDER: Replace these with real testimonials from LinkedIn recommendations,
+// colleagues, or clients. The component is ready — just swap the quotes.
+export const TESTIMONIALS = [
+  {
+    name: "Kingsley Asoegwu · Product Manager",
+    title: "Product Manager",
+    company: "Filmmakers Mart",
+    quote:
+      "Adedayo is a frontend developer with an exceptional eye for design and a deep understanding of user experience. His ability to translate complex requirements into elegant, intuitive interfaces is second to none. He is a pleasure to work with and a valuable asset to any team.",
+    initials: "PM",
+    linkedinUrl: "https://www.linkedin.com/in/asoegwu/",
+  },
+  {
+    name: "Philemon Eniola · Colleague",
+    title: "Frontend Engineer",
+    company: "Filmmakers Mart",
+    quote: "Adedayo is a strong problem-solver. He takes the time to fully understand a problem before diving into implementation, and he's always willing to put in the extra effort to ensure that the solution is both robust and maintainable. He's also a great team player and a pleasure to work with.",
+    initials: "FE",
+    linkedinUrl: "https://www.linkedin.com/in/philemon-eniola/",
+  },
 ];
 
 export const EDUCATION = [

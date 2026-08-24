@@ -1,8 +1,9 @@
 // Styles for SkillsSection
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { motion } from "framer-motion";
 import { T } from "../../styles/tokens";
 import { Inner } from "../ui";
+import type { SkillDepth } from "../../data";
 
 export const Wrap = styled.section`
   padding: 6rem 0;
@@ -106,7 +107,7 @@ export const GridTitle = styled(motion.h2)`
 
 export const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.2rem;
 
   @media (max-width: 640px) {
@@ -138,7 +139,7 @@ export const CatTitle = styled.div`
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: ${T.accent};
-  margin-bottom: 1.1rem;
+  margin-bottom: 1.2rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -153,32 +154,92 @@ export const CatTitle = styled.div`
   }
 `;
 
-export const SkillList = styled.ul`
+export const ProfList = styled.ul`
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  gap: 0.85rem;
 `;
 
-export const SkillItem = styled.li`
-  font-size: 0.845rem;
+/* ── Depth colour mapping ── */
+const depthColor = (depth: SkillDepth) => {
+  switch (depth) {
+    case "Lead":
+      return css`background: ${T.accent};`;
+    case "Build":
+      return css`background: rgba(184,131,42,0.65);`;
+    case "Use":
+      return css`background: rgba(184,131,42,0.38);`;
+    case "Learn":
+      return css`background: rgba(184,131,42,0.2);`;
+  }
+};
+
+const depthWidth = (depth: SkillDepth) => {
+  switch (depth) {
+    case "Lead":  return "92%";
+    case "Build": return "68%";
+    case "Use":   return "46%";
+    case "Learn": return "28%";
+  }
+};
+
+export const ProfRow = styled.li`
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+`;
+
+export const ProfTop = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+`;
+
+export const ProfName = styled.span`
+  font-size: 0.8rem;
   color: ${T.inkMuted};
   font-weight: 500;
-  padding-left: 1rem;
-  position: relative;
   transition: color 0.2s;
-
-  &::before {
-    content: "▹";
-    position: absolute;
-    left: 0;
-    color: ${T.accent};
-    font-size: 0.68rem;
-    opacity: 0.7;
-    top: 0.1em;
-  }
 
   ${Card}:hover & {
     color: ${T.ink};
   }
 `;
+
+export const DepthTag = styled.span<{ $depth: SkillDepth }>`
+  font-family: ${T.fontMono};
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: ${(p) => {
+    switch (p.$depth) {
+      case "Lead":  return T.accent;
+      case "Build": return "rgba(184,131,42,0.75)";
+      case "Use":   return T.inkDim;
+      case "Learn": return "rgba(255,255,255,0.18)";
+    }
+  }};
+`;
+
+export const ProfTrack = styled.div`
+  width: 100%;
+  height: 2px;
+  background: ${T.border};
+  border-radius: 1px;
+  overflow: hidden;
+`;
+
+export const ProfFill = styled(motion.div)<{ $depth: SkillDepth }>`
+  height: 100%;
+  border-radius: 1px;
+  transform-origin: left center;
+  ${(p) => depthColor(p.$depth)}
+  /* width is set by whileInView animate, target width from depthWidth */
+  &[data-target-width] {
+    /* used for reference only */
+  }
+`;
+
+/* Export depthWidth for use in component */
+export { depthWidth };

@@ -9,7 +9,7 @@ import {
   useCallback,
   ReactNode,
 } from "react";
-import { motion, useSpring } from "framer-motion";
+import { motion, useSpring, AnimatePresence } from "framer-motion";
 import styled from "styled-components";
 import { T } from "../../styles/tokens";
 
@@ -19,7 +19,10 @@ export type CursorVariant =
   | "hover"    // over links / buttons
   | "text"     // over paragraphs / headings
   | "drag"     // over project cards
-  | "click";   // while mouse is down
+  | "click"    // while mouse is down
+  | "drop"     // over marble mood buttons / drop button
+  | "explore"  // over OSS cards
+  | "view";    // over project view links
 
 /* ── Context ────────────────────────────────────────────── */
 interface CursorCtx {
@@ -45,8 +48,8 @@ const Wrap = styled.div`
 
 const Dot = styled(motion.div)`
   position: absolute;
-  width: 16px;
-  height: 16px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: ${T.accent};
   transform: translate(-50%, -50%);
@@ -60,9 +63,20 @@ const Ring = styled(motion.div)`
   will-change: transform;
   border: 1.5px solid ${T.accent};
   background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-/* ── Label inside ring for drag/view states ─────────────── */
+const Ripple = styled(motion.div)`
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid ${T.accent};
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+`;
+
+/* ── Label inside ring ──────────────────────────────────── */
 const RingLabel = styled(motion.span)`
   position: absolute;
   inset: 0;
@@ -70,9 +84,9 @@ const RingLabel = styled(motion.span)`
   align-items: center;
   justify-content: center;
   font-family: ${T.fontBody};
-  font-size: 0.55rem;
+  font-size: 0.5rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #fff;
   pointer-events: none;
@@ -103,7 +117,7 @@ const RING_CONFIG: Record<
   },
   hover: {
     size: 52,
-    bg: `rgba(184,131,42,0.15)`,
+    bg: `rgba(184,131,42,0.12)`,
     border: T.accent,
     opacity: 1,
     dotOpacity: 0,
@@ -120,7 +134,7 @@ const RING_CONFIG: Record<
   },
   drag: {
     size: 72,
-    bg: `rgba(184,131,42,0.12)`,
+    bg: `rgba(184,131,42,0.10)`,
     border: T.accent,
     opacity: 1,
     label: "drag",
@@ -128,12 +142,39 @@ const RING_CONFIG: Record<
     dotScale: 0,
   },
   click: {
-    size: 22,
-    bg: `rgba(184,131,42,0.3)`,
+    size: 24,
+    bg: `rgba(184,131,42,0.25)`,
     border: T.accent,
     opacity: 1,
     dotOpacity: 1,
     dotScale: 0.5,
+  },
+  drop: {
+    size: 62,
+    bg: `rgba(184,131,42,0.14)`,
+    border: T.accent,
+    opacity: 1,
+    label: "drop",
+    dotOpacity: 0,
+    dotScale: 0,
+  },
+  explore: {
+    size: 62,
+    bg: `rgba(184,131,42,0.10)`,
+    border: T.accent,
+    opacity: 1,
+    label: "explore",
+    dotOpacity: 0,
+    dotScale: 0,
+  },
+  view: {
+    size: 54,
+    bg: `rgba(184,131,42,0.10)`,
+    border: T.accent,
+    opacity: 1,
+    label: "view",
+    dotOpacity: 0,
+    dotScale: 0,
   },
 };
 
@@ -143,6 +184,8 @@ function CursorRenderer({ variant }: { variant: CursorVariant }) {
   const mouseY = useRef(typeof window !== "undefined" ? -200 : -200);
 
   const [dotPos, setDotPos] = useState({ x: -200, y: -200 });
+  const [ripples, setRipples] = useState<{ id: number; x: number; y: number }[]>([]);
+  const rippleId = useRef(0);
 
   // Dot follows mouse 1:1
   useEffect(() => {
@@ -155,14 +198,26 @@ function CursorRenderer({ variant }: { variant: CursorVariant }) {
     return () => window.removeEventListener("mousemove", onMove);
   }, []);
 
+  // Ripple on click
+  useEffect(() => {
+    const onClick = () => {
+      const id = ++rippleId.current;
+      setRipples((r) => [...r, { id, x: mouseX.current, y: mouseY.current }]);
+      setTimeout(() => {
+        setRipples((r) => r.filter((rp) => rp.id !== id));
+      }, 600);
+    };
+    window.addEventListener("mousedown", onClick);
+    return () => window.removeEventListener("mousedown", onClick);
+  }, []);
+
   // Ring springs behind
-  const springCfg = { stiffness: 180, damping: 22, mass: 0.6 };
+  const springCfg = { stiffness: 160, damping: 20, mass: 0.6 };
   const rx = useSpring(dotPos.x, springCfg);
   const ry = useSpring(dotPos.y, springCfg);
 
-  // When in text mode ring collapses fast, normal mode is lagged
+  // Force snap for text / click modes
   useEffect(() => {
-    // force immediate snap for text / click modes
     if (variant === "text" || variant === "click") {
       rx.set(mouseX.current);
       ry.set(mouseY.current);
@@ -182,19 +237,23 @@ function CursorRenderer({ variant }: { variant: CursorVariant }) {
           background: cfg.bg,
           borderColor: cfg.border,
           opacity: cfg.opacity,
-          mixBlendMode: (cfg.mixBlend) ?? "normal",
+          mixBlendMode: (cfg.mixBlend ?? "normal") as "normal" | "difference",
         }}
-        transition={{ type: "spring", stiffness: 280, damping: 24 }}
+        transition={{ type: "spring", stiffness: 260, damping: 22 }}
       >
-        {cfg.label && (
-          <RingLabel
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            {cfg.label}
-          </RingLabel>
-        )}
+        <AnimatePresence mode="wait">
+          {cfg.label && (
+            <RingLabel
+              key={cfg.label}
+              initial={{ opacity: 0, scale: 0.7 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.7 }}
+              transition={{ duration: 0.15 }}
+            >
+              {cfg.label}
+            </RingLabel>
+          )}
+        </AnimatePresence>
       </Ring>
 
       {/* Dot */}
@@ -206,6 +265,20 @@ function CursorRenderer({ variant }: { variant: CursorVariant }) {
         }}
         transition={{ duration: 0.18 }}
       />
+
+      {/* Click ripples */}
+      <AnimatePresence>
+        {ripples.map((rp) => (
+          <Ripple
+            key={rp.id}
+            style={{ left: rp.x, top: rp.y }}
+            initial={{ width: 10, height: 10, opacity: 0.7 }}
+            animate={{ width: 56, height: 56, opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          />
+        ))}
+      </AnimatePresence>
     </Wrap>
   );
 }
@@ -233,7 +306,7 @@ export function CustomCursorProvider({ children }: { children: ReactNode }) {
     document.addEventListener("mouseenter", show);
 
     // Global mouse-down / up for click state
-    const down = () => setVariantState((v) => (v !== "drag" ? "click" : v));
+    const down = () => setVariantState((v) => (v !== "drag" && v !== "drop" && v !== "explore" && v !== "view" ? "click" : v));
     const up = () => setVariantState((v) => (v === "click" ? "default" : v));
     window.addEventListener("mousedown", down);
     window.addEventListener("mouseup", up);
@@ -263,10 +336,6 @@ export function CustomCursorProvider({ children }: { children: ReactNode }) {
 }
 
 /* ── Convenience hook wrappers ───────────────────────────── */
-/**
- * Spread onto any element to get hover cursor behaviour.
- * Usage: <button {...cursorHover("hover")}>…</button>
- */
 export function useCursorHandlers(hoverVariant: CursorVariant = "hover") {
   const { setVariant } = useCursor();
   return {

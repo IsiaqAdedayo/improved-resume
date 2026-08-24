@@ -18,6 +18,7 @@ import { ProjectsSection } from "./components/ProjectsSection";
 import { SkillsSection } from "./components/SkillsSection";
 import { ExperienceSection } from "./components/ExperienceSection";
 import { ContactSection } from "./components/ContactSection";
+import { TestimonialsSection } from "./components/TestimonialsSection";
 import { Footer } from "./components/Footer";
 
 export default function Portfolio() {
@@ -70,6 +71,7 @@ export default function Portfolio() {
         <ProjectsSection />
         <SkillsSection />
         <ExperienceSection />
+        <TestimonialsSection />
         <ContactSection />
         <Footer />
       </PageWrap>

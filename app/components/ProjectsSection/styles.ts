@@ -51,7 +51,7 @@ export const SceneBg = styled.div<{ $src?: string | null }>`
     p.$src
       ? `url(${p.$src}) center/cover no-repeat`
       : "linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 60%)"};
-  opacity: ${(p) => (p.$src ? 0.16 : 1)};
+  opacity: ${(p) => (p.$src ? 0.18 : 1)};
   filter: ${(p) => (p.$src ? "blur(3px)" : "none")};
   z-index: 0;
 `;
@@ -138,6 +138,27 @@ export const ViewBtn = styled(motion.a)`
   }
 `;
 
+export const BehindBtn = styled.button`
+  background: none;
+  border: 1px solid ${T.border};
+  border-radius: 100px;
+  cursor: pointer;
+  font-family: ${T.fontMono};
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: ${T.inkDim};
+  padding: 0.4rem 1rem;
+  margin-bottom: 1.6rem;
+  transition: border-color 0.2s, color 0.2s;
+
+  &:hover {
+    border-color: ${T.accent};
+    color: ${T.accent};
+  }
+`;
+
 export const MockupWrap = styled.div`
   position: relative;
   display: flex;
@@ -193,6 +214,12 @@ export const BrowserImg = styled.img`
   object-fit: cover;
   object-position: top;
   display: block;
+`;
+
+export const BrowserSliderWrap = styled.div`
+  width: 100%;
+  height: 260px;
+  position: relative;
 `;
 
 export const BrowserPlaceholder = styled.div`
@@ -287,6 +314,7 @@ export const Dot = styled.div<{ $active: boolean }>`
     background 0.3s ease;
 `;
 
+/* ── Open Source — 3D interactive cards ─────────────────── */
 export const OSSWrap = styled.section`
   background: ${T.bgSurface};
   padding: 5rem 0;
@@ -298,23 +326,42 @@ export const OSSGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
   margin-top: 2rem;
+  /* Enable 3D perspective for child transforms */
+  perspective: 1000px;
 `;
 
 export const OSSCard = styled(motion.a)`
   display: block;
   padding: 1.8rem;
   border: 1px solid ${T.border};
-  border-radius: 6px;
+  border-radius: 10px;
   background: rgba(255, 255, 255, 0.02);
   text-decoration: none;
-  transition:
-    border-color 0.25s,
-    background 0.25s;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  /* Hardware-accelerate the 3D transform */
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: border-color 0.3s, background 0.3s;
 
   &:hover {
     border-color: ${T.accent};
-    background: ${T.accentDim};
+    background: rgba(184, 131, 42, 0.04);
+  }
+`;
+
+/* Radial spotlight that tracks cursor inside card */
+export const OSSSpotlight = styled.div`
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s;
+
+  ${OSSCard}:hover & {
+    opacity: 1;
   }
 `;
 
@@ -357,4 +404,61 @@ export const OSSBadge = styled.span`
   background: ${T.accentDim};
   padding: 0.2rem 0.6rem;
   border-radius: 2px;
+`;
+
+/* Telemetry row */
+export const OSSMeta = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid ${T.border};
+`;
+
+export const OSSMetaItem = styled.div`
+  font-family: ${T.fontMono};
+  font-size: 0.58rem;
+  color: ${T.inkDim};
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+`;
+
+export const LangDot = styled.span<{ $lang: string }>`
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: ${(p) =>
+    p.$lang === "TypeScript"
+      ? "#3178c6"
+      : p.$lang === "JavaScript"
+      ? "#f7df1e"
+      : "#e34c26"};
+`;
+
+/* Explore action button */
+export const OSSAction = styled(motion.div)`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: ${T.fontMono};
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: ${T.accent};
+  margin-top: 1.2rem;
+  padding: 0.45rem 1rem;
+  border: 1px solid rgba(184, 131, 42, 0.3);
+  border-radius: 100px;
+  background: rgba(184, 131, 42, 0.05);
+  transition: background 0.2s, border-color 0.2s;
+
+  ${OSSCard}:hover & {
+    background: rgba(184, 131, 42, 0.1);
+    border-color: ${T.accent};
+  }
 `;
