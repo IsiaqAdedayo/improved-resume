@@ -34,7 +34,7 @@ export const metadata: Metadata = {
       "Senior Frontend Engineer and Frontend Team Lead with 4+ years building production-grade web applications. Based in Lagos, Nigeria.",
     images: [
       {
-        url: "https://qaisidesigns.vercel.app/screenshots/mindful-desktop.png",
+        url: "https://qaisidesigns.vercel.app/screenshots/resume.png",
         width: 800,
         height: 600,
         alt: "Adedayo Showande",
