@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/react"
 
 import { Cormorant_Garamond, Syne, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import StyledComponentsRegistry from "./registry";
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -34,13 +35,14 @@ export const metadata: Metadata = {
       "Senior Frontend Engineer and Frontend Team Lead with 4+ years building production-grade web applications. Based in Lagos, Nigeria.",
     images: [
       {
-        url: "https://qaisidesigns.vercel.app/screenshots/resume.png",
+        url: "/screenshots/resume.png",
         width: 800,
         height: 600,
-        alt: "Adedayo Showande",
+        alt: "Adedayo Showande — Senior Frontend Engineer portfolio",
       },
     ],
   },
+  metadataBase: new URL("https://qaisidesigns.vercel.app"),
 };
 
 export default function RootLayout({
@@ -51,7 +53,9 @@ export default function RootLayout({
       <body
         className={`${cormorantGaramond.variable} ${syne.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        {children}
+        <StyledComponentsRegistry>
+          {children}
+        </StyledComponentsRegistry>
 				<Analytics />
       </body>
     </html>
