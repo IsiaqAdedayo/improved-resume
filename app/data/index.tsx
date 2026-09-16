@@ -122,57 +122,37 @@ export const OPEN_SOURCE = [
     index: "04",
     title: "Invoice Builder API",
     tagline:
-      "NestJS API for invoice creation, customer management, calculations, and status workflows.",
-    tech: [
-      "TypeScript",
-      "NestJS",
-      "PostgreSQL",
-      "Prisma",
-    ],
-    github:
-      "https://github.com/IsiaqAdedayo/invoice-builder-api",
+      "Production-style NestJS API for invoice workflows, customer management, calculations, and role-based operations.",
+    tech: ["TypeScript", "NestJS", "PostgreSQL", "Prisma"],
+    github: "https://github.com/IsiaqAdedayo/invoice-builder-api",
     badge: "Open Source",
     stars: 4,
     language: "TypeScript",
     lastCommit: "2 months ago",
   },
-
   {
     index: "05",
-    title: "GitHub Repo Clone",
+    title: "Event App",
     tagline:
-      "GraphQL-powered recreation of the GitHub repository experience.",
-    tech: [
-      "React",
-      "GraphQL",
-      "Apollo Client",
-      "CSS3",
-    ],
-    github:
-      "https://github.com/IsiaqAdedayo/GitHubRepoClone",
+      "Full-stack event platform with event discovery, RSVP, bookmarking, media uploads, and state-driven user interactions.",
+    tech: ["Next.js", "TypeScript", "NestJS", "Prisma"],
+    github: "https://github.com/IsiaqAdedayo/Event-app",
     badge: "Open Source",
-    stars: 6,
-    language: "JavaScript",
-    lastCommit: "1 year ago",
+    stars: 0,
+    language: "TypeScript",
+    lastCommit: "Recent",
   },
-
   {
     index: "06",
-    title: "Crypto Tracker",
+    title: "Event App Mobile",
     tagline:
-      "Real-time cryptocurrency dashboard consuming live market data.",
-    tech: [
-      "React",
-      "Chart.js",
-      "REST API",
-      "JavaScript",
-    ],
-    github:
-      "https://github.com/IsiaqAdedayo/Crypto_Tracker",
+      "React Native mobile experience for discovering events, viewing event details, and managing RSVP interactions.",
+    tech: ["React Native", "TypeScript", "Expo", "State Management"],
+    github: "https://github.com/IsiaqAdedayo/Event-app-mobile",
     badge: "Open Source",
-    stars: 8,
-    language: "JavaScript",
-    lastCommit: "1 year ago",
+    stars: 0,
+    language: "TypeScript",
+    lastCommit: "Recent",
   },
 ];
 
