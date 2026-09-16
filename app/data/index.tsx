@@ -147,7 +147,7 @@ export const OPEN_SOURCE = [
     title: "Event App Mobile",
     tagline:
       "React Native mobile experience for discovering events, viewing event details, and managing RSVP interactions.",
-    tech: ["React Native", "TypeScript", "Expo", "State Management"],
+    tech: ["React Native", "TypeScript", "Expo"],
     github: "https://github.com/IsiaqAdedayo/Event-app-mobile",
     badge: "Open Source",
     stars: 0,
