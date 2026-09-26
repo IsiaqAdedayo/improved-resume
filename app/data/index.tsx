@@ -158,7 +158,7 @@ export const OPEN_SOURCE = [
 
 export const EXPERIENCE = [
   {
-    period: "April 2026 - Present",
+    period: "Jan 2026 - Present",
     role: "Fullstack Engineer",
     company: "ShowRepublic — United Kingdom",
     url: "https://showrepublic.tv",
@@ -194,7 +194,7 @@ export const EXPERIENCE = [
   },
 
   {
-    period: "Dec 2021 — Present",
+    period: 'Dec 2021 — Dec 2025',
     role: "Senior Frontend Engineer / Frontend Team Lead",
     company: "Filmmakers Mart (Recce Solutions)",
     url: "https://filmmakersmart.com",
